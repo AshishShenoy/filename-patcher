@@ -139,10 +139,12 @@ class processGUI:
         self.dir = ttk.Entry(self.window, width = 80)
         self.text = ttk.Entry(self.window, width = 80)
         ttk.Label(self.window, 
-            text = "Enter the folder containing the files (Enter '.' if current folder): ").pack(anchor = 'w', pady = 5, padx = 10)
-        self.dir.pack(padx = 10, pady = 5)
-        ttk.Label(self.window, text = "Enter the text: ").pack(anchor = 'w', padx = 10, pady = 5)
-        self.text.pack(padx = 10, pady = 5)
+            text = f"The current folder is {os.getcwd()}").pack(anchor = 'w', pady = 5, padx = 10)
+        ttk.Label(self.window, 
+            text = "Enter the folder containing the files (Enter '.' if current folder): ").pack(anchor = 'w', padx = 10)
+        self.dir.pack(anchor = 'w', padx = 10, pady = 5)
+        ttk.Label(self.window, text = "Enter the text: ").pack(anchor = 'w', padx = 10)
+        self.text.pack(anchor = 'w', padx = 10, pady = 5)
         
         ttk.Button(self.window, text = "Submit", command = self.processChoice).pack(side = LEFT, anchor = 's', padx = 10, pady = 10)
         ttk.Button(self.window, text = "Quit", command = sys.exit).pack(side = RIGHT, anchor = 's', padx = 10, pady = 10)

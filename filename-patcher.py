@@ -13,7 +13,7 @@ if os.name == 'nt':
 
 def initLogging():
     logging.basicConfig(
-        filename = "xkcdwld.log",
+        filename = "filepatch.log",
         filemode = 'w',
         level = logging.DEBUG,
         format = " %(asctime)s - %(levelname)s - %(message)s",
@@ -31,10 +31,14 @@ def isHidden(file):
         return file.startswith('.') 
 
 
+def isValid(file):
+    return file not in [os.path.basename(__file__), "filepatch.log"] and not isHidden(file)
+
+
 def insertBeg(text):
     num = 0
     for file in os.listdir():
-        if file != os.path.basename(__file__) and not isHidden(file):
+        if isValid(file):
             logging.debug(f"Modifying {file} to {text + file}.")
             shutil.move(file, text + file)
             num += 1
@@ -44,7 +48,7 @@ def insertBeg(text):
 def insertEnd(text):
     num = 0
     for file in os.listdir():
-        if file != os.path.basename(__file__) and not isHidden(file):
+        if isValid(file):
             logging.debug(f"Modifying {file} to {file + text}.")
             shutil.move(file, file + text)
             num += 1
@@ -54,7 +58,7 @@ def insertEnd(text):
 def deleteBeg(text):
     num = 0
     for file in os.listdir():
-        if file.startswith(text):
+        if file.startswith(text) and isValid(file):
             logging.debug(f"Modifying {file} to {file[len(text):]}.")
             shutil.move(file, file[len(text):])
             num += 1
@@ -64,7 +68,7 @@ def deleteBeg(text):
 def deleteEnd(text):
     num = 0
     for file in os.listdir():
-        if file.endswith(text):
+        if file.endswith(text) and isValid(file):
             logging.debug(f"Modifying {file} to {file[:-len(text)]}.")
             shutil.move(file, file[:-len(text)])
             num += 1

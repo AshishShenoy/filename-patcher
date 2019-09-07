@@ -1,12 +1,8 @@
 import os
 import shutil
 
-
-if os.name == 'nt':
-    import win32api, win32con
-
-
 # TODO: Add replace functionality, throughout the filename.
+# TODO: Add Windows Support.
 def getChoice():
     print("Enter 'I1' to insert text to the beginning of the filename.")
     print("Enter 'I2' to insert text to the end of the filename.")
@@ -22,13 +18,7 @@ def getInput():
 
 
 def isHidden(file):
-    if os.name== 'nt':
-        # Windows
-        attribute = win32api.GetFileAttributes(file)
-        return attribute & (win32con.FILE_ATTRIBUTE_HIDDEN | win32con.FILE_ATTRIBUTE_SYSTEM)
-    else:
-        # Linux / Unix
-        return file.startswith('.') 
+    return file.startswith('.') 
 
 
 def isValid(file):
@@ -79,7 +69,6 @@ def process(choice):
         return PROCESS_DICT[choice](text)
 
 
-# TODO: Add GUI.
 def main():
     choice = getChoice()
     numChanged = process(choice)
